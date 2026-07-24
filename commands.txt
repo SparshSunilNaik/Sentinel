@@ -1,0 +1,85 @@
+# ============================================
+# Sentinel - Commands to Run the Project
+# ============================================
+# Follow these steps in order on a Windows machine.
+# Prerequisites: Python 3.11+, Node.js 20+, Git
+
+# -------------------------------------------------------
+# 1. Clone the Repository
+# -------------------------------------------------------
+git clone https://github.com/SparshSunilNaik/Sentinel.git
+cd Sentinel
+
+# -------------------------------------------------------
+# 2. Backend Setup
+# -------------------------------------------------------
+cd backend
+
+# 2a. Create virtual environment
+python -m venv .venv
+
+# 2b. Activate virtual environment
+.venv\Scripts\activate
+
+# 2c. Install dependencies
+pip install -r requirements.txt
+
+# 2d. Run the backend server
+uvicorn app.main:app --reload --port 8000
+
+# Backend runs at: http://localhost:8000
+# API docs (Swagger): http://localhost:8000/docs
+# Health check: http://localhost:8000/health
+
+# -------------------------------------------------------
+# 3. Frontend Setup (open a new terminal)
+# -------------------------------------------------------
+cd frontend
+
+# 3a. Install dependencies
+npm install
+
+# 3b. Run the frontend server
+npm run dev
+
+# Frontend runs at: http://localhost:3000
+
+# -------------------------------------------------------
+# 4. Using start-dev.bat (Alternative to steps 2-3)
+# -------------------------------------------------------
+# From the repository root, double-click:
+start-dev.bat
+
+# This launches both backend and frontend automatically.
+
+# -------------------------------------------------------
+# 5. Environment Variables
+# -------------------------------------------------------
+# No environment variables are required.
+# Default settings are defined in backend/app/core/config.py.
+# The frontend reads API URL from frontend/.env.local:
+# NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+
+# -------------------------------------------------------
+# 6. URLs
+# -------------------------------------------------------
+# Frontend Dashboard:  http://localhost:3000
+# Backend API:         http://localhost:8000
+# Swagger Docs:        http://localhost:8000/docs
+# Health Check:        http://localhost:8000/health
+
+# -------------------------------------------------------
+# 7. Login Credentials
+# -------------------------------------------------------
+# Email:    operator@amex.com
+# Password: sentinel2026
+
+# -------------------------------------------------------
+# 8. Notes
+# -------------------------------------------------------
+# - The database (sentinel.db) is auto-created on first run.
+# - Mock data (agents, policies, sample audit logs) is
+#   auto-seeded when the backend starts for the first time.
+# - The kill switch is disabled by default.
+# - The simulator runs on the frontend dashboard and does
+#   not require any external services.
