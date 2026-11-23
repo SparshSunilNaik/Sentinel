@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel Governance Plane</title>
+  <meta name="description" content="Sentinel sits between autonomous financial AI agents and the systems they act on. Every action passes identity, permission, budget and risk checks before it can run. Try the real dashboard and the decision pipeline in your browser.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l11 4v8c0 7-4.7 11.6-11 14-6.3-2.4-11-7-11-14V7z' fill='%233b4cca'/%3E%3Cpath d='M11 16l3.5 3.5L21.5 12' stroke='%23fff' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("sn-site-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="Sentinel, back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-4.7 11.6-11 14-6.3-2.4-11-7-11-14V7z" fill="var(--accent)"/><path d="M11 16l3.5 3.5L21.5 12" stroke="var(--surface)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Sentinel</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#live">Live dashboard</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#policies">Policies</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#notes">Notes</a>
+        <a href="#run">Run it</a>
+      </nav>
+      <button class="icon-btn theme-btn" id="theme-btn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a9 9 0 1 0 11 11Z"/></svg>
+      </button>
+      <a class="icon-btn" href="https://github.com/SparshSunilNaik/Sentinel" aria-label="Source on GitHub" title="Source on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <h1>AI agents can move money. <em>Sentinel decides when.</em></h1>
+          <p>A governance control plane for autonomous financial agents. Before a travel, dispute, benefits or servicing agent refunds, rebooks or waives anything, the request passes five gates, gets a risk score, and is approved, sent to a human, or denied, with the reasons written down.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#live">Open the live dashboard</a>
+            <a class="btn" href="#pipeline">Run a request</a>
+          </div>
+          <div class="facts"><span class="chip acc">CodeStreet 2026 hackathon</span><span class="chip">FastAPI + SQLite</span><span class="chip">Next.js 16</span><span class="chip">4 agents, 4 policies</span></div>
+        </div>
+        <div class="card gates" id="hero-gates" aria-label="The five gates, replaying one request"></div>
+      </section>
+
+      <section class="block" id="live">
+        <div class="sec-head">
+          <span class="num">01 / Live dashboard</span>
+          <h2>The real operator dashboard</h2>
+          <p>This is the project's own Next.js dashboard, built as static pages. Instead of the FastAPI server, a JavaScript port of the backend answers its API calls in your browser. I checked the port against the real backend: 800 random operations, 0 differences.</p>
+        </div>
+        <div class="live">
+          <div class="card frame">
+            <div class="frame-bar"><i></i><i></i><i></i><span>Sentinel operator dashboard</span><a href="app/" target="_blank" rel="noopener">Open full screen</a></div>
+            <div class="screen" id="screen">
+              <div class="cover" id="cover"><div><b>Sentinel, running in your browser</b><p>The demo login is filled in for you. Data stays in this browser.</p><button class="btn primary" id="boot" type="button">Start the dashboard</button></div></div>
+            </div>
+          </div>
+          <div class="card tour">
+            <h3>Try this</h3>
+            <p class="note">Tick them off as you go.</p>
+            <a class="btn primary mobile-only" href="app/">Open the dashboard</a>
+            <p class="note mobile-only">It is laid out for a desktop window, so on a phone it opens on its own page.</p>
+            <ol id="tour">
+              <li><label><input type="checkbox"><span><b>Sign in</b>The demo operator's email and password are already filled in.</span></label></li>
+              <li><label><input type="checkbox"><span><b>Watch live requests</b>The dashboard's simulator sends an agent request every few seconds. Each one runs the full pipeline.</span></label></li>
+              <li><label><input type="checkbox"><span><b>Approve an escalation</b>In Requests, filter by Escalated, open one and approve or deny it.</span></label></li>
+              <li><label><input type="checkbox"><span><b>Pull the kill switch</b>Activate it on the dashboard. Every agent stops, and new requests are blocked at the permission gate.</span></label></li>
+              <li><label><input type="checkbox"><span><b>Read the audit log</b>Search for KILL to find the switch events with the operator who flipped them.</span></label></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="pipeline">
+        <div class="sec-head">
+          <span class="num">02 / Pipeline</span>
+          <h2>Send one request through the gates</h2>
+          <p>Pick an agent and an action, set the amount and the customer's risk, and see exactly what Sentinel would decide and why. It runs the same port of <code>decision_engine.py</code> and <code>risk_engine.py</code>, on a fresh copy of the seeded agents each time.</p>
+        </div>
+        <div class="play">
+          <div class="card composer" id="composer"></div>
+          <div class="card result" id="result"></div>
+        </div>
+      </section>
+
+      <section class="block" id="policies">
+        <div class="sec-head">
+          <span class="num">03 / Policies</span>
+          <h2>Four agents, four rulebooks</h2>
+          <p>The seeded policies. Each agent is bound to one. Hours are in UTC.</p>
+        </div>
+        <div class="card pol-card"><div class="tbl-wrap" id="pol"></div></div>
+      </section>
+
+      <section class="block" id="architecture">
+        <div class="sec-head">
+          <span class="num">04 / Architecture</span>
+          <h2>Dashboard, API, engine, audit</h2>
+          <p>A Next.js operator console talks to a FastAPI service. The service runs every agent request through the decision engine and writes the result to SQLite, together with an audit entry.</p>
+        </div>
+        <div class="arch" id="arch"></div>
+      </section>
+
+      <section class="block" id="notes">
+        <div class="sec-head">
+          <span class="num">05 / Notes</span>
+          <h2>Found while porting the engine</h2>
+          <p>Each of these behaves the same in the live dashboard above, because the port matches the backend exactly.</p>
+        </div>
+        <div class="notes" id="notes-list"></div>
+      </section>
+
+      <section class="block" id="run">
+        <div class="sec-head">
+          <span class="num">06 / Run it</span>
+          <h2>Run the real thing</h2>
+        </div>
+        <div class="run">
+          <div class="card">
+            <h3>Backend</h3>
+            <p>Python 3.11 or 3.12. The pinned pydantic 2.10 has no wheels for 3.14 yet. The database is created and seeded on first start.</p>
+            <div class="cmd"><pre>cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000</pre><button class="copy" type="button">Copy</button></div>
+            <p class="note">Swagger docs at <code>localhost:8000/docs</code>.</p>
+          </div>
+          <div class="card">
+            <h3>Frontend</h3>
+            <p>Node 20 or newer. Opens on <code>localhost:3000</code>; sign in with the demo operator from the README.</p>
+            <div class="cmd"><pre>cd frontend
+npm install
+npm run dev</pre><button class="copy" type="button">Copy</button></div>
+            <p class="note">Or run <code>start-dev.bat</code> (Windows) or <code>start-dev.sh</code> from the repository root.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span><a href="https://github.com/SparshSunilNaik/Sentinel">Sentinel</a> by Sparsh Sunil Naik, built for the American Express CodeStreet 2026 hackathon. This page and its demo are not affiliated with American Express.</span>
+      <span>FastAPI, SQLAlchemy, Next.js, Tailwind</span>
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/site.js"></script>
+</body>
+</html>
